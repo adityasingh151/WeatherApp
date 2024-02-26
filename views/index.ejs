@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://source.unsplash.com/1600x900/?weather'); /* Background image from Unsplash */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: fadeIn 5s ease-in-out; /* Fading background animation */
+            height: 100vh;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background color for header */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background color for footer */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="text-3xl font-semibold">Weather App</h1>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+            <form id="weatherForm" class="flex flex-col space-y-4">
+                <label for="locationInput" class="font-semibold">Enter Location:</label>
+                <input type="text" id="locationInput" class="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-blue-500" placeholder="E.g., New York, London">
+                <button type="submit" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Get Weather</button>
+            </form>
+            <div id="weatherData" class="mt-8 hidden">
+                <h2 class="text-xl font-semibold mb-2">Weather Information</h2>
+                <div id="weatherInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Made with ❤️ by Aditya
+    </footer>
+
+    <script>
+        const weatherForm = document.getElementById('weatherForm');
+        const locationInput = document.getElementById('locationInput');
+        const weatherData = document.getElementById('weatherData');
+        const weatherInfo = document.getElementById('weatherInfo');
+
+        weatherForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const location = locationInput.value;
+            const apiKey = 'c6d02b83892230a163f8341edd08b659'; // Replace with your Weather API key
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                displayWeather(data);
+            } catch (error) {
+                window.alert('There is no city with this name');
+            }
+        });
+
+        function displayWeather(data) {
+            weatherInfo.innerHTML = `
+                <p><strong>Location:</strong> ${data.name}, ${data.sys.country}</p>
+                <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+                <p><strong>Condition:</strong> ${data.weather[0].description}</p>
+                <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+                <p><strong>Wind Speed:</strong> ${data.wind.speed} km/h</p>
+            `;
+            weatherData.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
