@@ -7,6 +7,9 @@ This is a simple web application that retrieves weather information for a specif
 - Retrieves weather data based on user input or current location.
 - Displays various weather metrics such as temperature, condition, humidity, and wind speed.
 - Responsive design for seamless user experience across devices.
+- 
+- ## Demo
+- You can try out the Weather App [here](https://dull-plum-bighorn-sheep-slip.cyclic.app/).
 
 ## Installation
 
@@ -26,8 +29,7 @@ This is a simple web application that retrieves weather information for a specif
    Then type in "localhost:3000" in your web browser to run the application.
    
 ## Usage
-Click the "Get Random Joke" button to fetch a random joke.
-The joke setup and punchline will be displayed below the button.
+Click the "Get Weather" button to fetch the weather details of that location.
 
 ## Credits
 Tailwind CSS: https://tailwindcss.com/
